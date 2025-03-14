@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Urban Help</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4267B2', // Updated to the specified blue
+                        secondary: '#EFF6FF', // Updated to the specified light blue
+                        accent: '#4267B2', // Using the same blue for accent
+                        lightBlue: '#EFF6FF' // Adding the light blue as a named color
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 70px; /* Adjust based on your header height */
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px; /* Smaller padding for mobile */
+            }
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Sticky Header with Logo -->
+    <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 md:h-12 w-auto">
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden z-30" id="mobileMenuBtn">
+                    <i class="fas fa-bars text-primary text-2xl"></i>
+                </button>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 font-medium hover:text-primary">Home</a>
+                    <a href="about-us.html" class="text-primary font-medium hover:text-primary/80 border-b-2 border-primary">About Us</a>
+                    <a href="services.html" class="text-gray-600 font-medium hover:text-primary">Services</a>
+                </nav>
+                
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex space-x-3">
+                    <a href="login.html" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-all">Log In</a>
+                    <a href="register.html" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-all">Register</a>
+                </div>
+                
+                <!-- Mobile Menu Overlay -->
+                <div class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileMenu">
+                    <div class="bg-white h-full w-64 p-6 absolute right-0 top-0 shadow-lg">
+                        <div class="flex justify-end mb-6">
+                            <button class="text-primary text-2xl" id="closeMenuBtn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="flex flex-col space-y-4">
+                            <a href="index.html" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Home</a>
+                            <a href="about-us.html" class="text-primary font-medium hover:text-primary/80 border-b border-gray-200 pb-2">About Us</a>
+                            <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Services</a>
+                            <div class="pt-4 flex flex-col space-y-2">
+                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 text-center">Log In</a>
+                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 text-center">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Us Hero Section -->
+    <section class="relative bg-gradient-to-r from-primary to-primary/80 py-16 md:py-20">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="container mx-auto px-4 md:px-8 relative z-10">
+            <div class="text-center text-white">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">About Urban Help</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">Dedicated to providing exceptional cleaning and care services with professionalism, reliability, and attention to detail.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <img src="/placeholder.svg?height=400&width=600" alt="Urban Help Team" class="rounded-lg shadow-lg w-full">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Our Story</h2>
+                    <p class="text-gray-700 mb-4">
+                        Founded in 2010, Urban Help began with a simple mission: to provide high-quality, reliable cleaning services that make a difference in people's lives. What started as a small team of dedicated professionals has grown into a trusted network of experienced cleaners, caregivers, and household helpers.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        Our founder, Priya Sharma, recognized the need for a service that not only cleaned homes but also provided peace of mind. After experiencing firsthand the challenges of finding trustworthy household help, she decided to create a solution that would benefit both clients and service professionals.
+                    </p>
+                    <p class="text-gray-700">
+                        Today, Urban Help serves thousands of homes and businesses across India, maintaining the same commitment to excellence and integrity that has defined us from the beginning.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission and Values Section -->
+    <section class="py-16 bg-lightBlue">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Our Mission & Values</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    We're committed to transforming the way household services are delivered, making them more accessible, reliable, and professional.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="bg-lightBlue p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-star text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Excellence</h3>
+                    <p class="text-gray-700">
+                        We strive for excellence in every service we provide, going above and beyond to exceed expectations and deliver outstanding results.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="bg-lightBlue p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-handshake text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Integrity</h3>
+                    <p class="text-gray-700">
+                        We operate with honesty, transparency, and ethical practices in all our interactions with clients, employees, and partners.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="bg-lightBlue p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Care</h3>
+                    <p class="text-gray-700">
+                        We genuinely care about our clients' homes and well-being, treating each space with respect and providing compassionate service.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Meet Our Leadership Team</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    Our experienced leadership team brings together expertise from various industries to deliver the best service possible.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="mb-4 relative mx-auto w-40 h-40 rounded-full overflow-hidden">
+                        <img src="/placeholder.svg?height=160&width=160" alt="Priya Sharma" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary">Priya Sharma</h3>
+                    <p class="text-gray-600 mb-3">Founder & CEO</p>
+                    <p class="text-gray-700 mb-4">
+                        With over 15 years of experience in service industries, Priya leads our company with passion and vision.
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="mb-4 relative mx-auto w-40 h-40 rounded-full overflow-hidden">
+                        <img src="/placeholder.svg?height=160&width=160" alt="Rahul Patel" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary">Rahul Patel</h3>
+                    <p class="text-gray-600 mb-3">Operations Director</p>
+                    <p class="text-gray-700 mb-4">
+                        Rahul ensures our operations run smoothly and efficiently, maintaining our high standards of service.
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="mb-4 relative mx-auto w-40 h-40 rounded-full overflow-hidden">
+                        <img src="/placeholder.svg?height=160&width=160" alt="Ananya Desai" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary">Ananya Desai</h3>
+                    <p class="text-gray-600 mb-3">Customer Experience Manager</p>
+                    <p class="text-gray-700 mb-4">
+                        Ananya leads our customer service team, ensuring every client receives exceptional care and attention.
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-primary hover:text-primary/80"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="py-16 bg-lightBlue">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Our Achievements</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    We take pride in our growth and the positive impact we've made in the communities we serve.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Stat 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="text-4xl font-bold text-primary mb-2">15,000+</div>
+                    <p class="text-gray-700">Happy Clients</p>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="text-4xl font-bold text-primary mb-2">500+</div>
+                    <p class="text-gray-700">Professional Staff</p>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="text-4xl font-bold text-primary mb-2">12+</div>
+                    <p class="text-gray-700">Years of Experience</p>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="text-4xl font-bold text-primary mb-2">98%</div>
+                    <p class="text-gray-700">Customer Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">What Our Clients Say</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    Don't just take our word for it. Here's what our clients have to say about our services.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "Urban Help has transformed my life! Their house cleaning service is exceptional, and the staff is always professional and thorough. I've been a customer for over 3 years now and couldn't be happier."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/placeholder.svg?height=48&width=48" alt="Neha Gupta" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary">Neha Gupta</h4>
+                            <p class="text-gray-600 text-sm">Hyderabad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "Finding reliable childcare was a challenge until I discovered Urban Help. Their babysitters are well-trained, caring, and my children love them. The peace of mind they provide is priceless."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/placeholder.svg?height=48&width=48" alt="Vikram Singh" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary">Vikram Singh</h4>
+                            <p class="text-gray-600 text-sm">Bangalore</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "The elderly care services from Urban Help have been a blessing for our family. The caregivers are compassionate, reliable, and have become like family to my parents. I highly recommend their services."
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/placeholder.svg?height=48&width=48" alt="Meera Reddy" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary">Meera Reddy</h4>
+                            <p class="text-gray-600 text-sm">Chennai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-primary">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center text-white">
+                <h2 class="text-3xl font-bold mb-4">Ready to Experience the Urban Help Difference?</h2>
+                <p class="text-lg mb-8 max-w-3xl mx-auto">
+                    Join thousands of satisfied customers who have transformed their homes and lives with our professional services.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="bg-white text-primary px-6 py-3 rounded-md font-medium hover:bg-lightBlue inline-flex items-center shadow-lg transition-all hover:shadow-xl">
+                        Book a Service <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#" class="bg-transparent text-white border-2 border-white px-6 py-3 rounded-md font-medium hover:bg-white hover:bg-opacity-10 inline-flex items-center">
+                        Contact Us <i class="fas fa-phone ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white pt-12 pb-6">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 bg-white p-1 rounded-md mr-2">
+                        <span class="text-white font-bold text-xl">Urban Help</span>
+                    </div>
+                    <p class="mb-4">We work with experienced and professional cleaners to deliver outstanding service.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>Mon - Sun: 8am - 8pm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter to get our latest updates & news.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email address" class="p-3 rounded-l-md w-full text-gray-800">
+                        <button class="bg-primary text-white p-3 rounded-r-md border border-white">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="bg-blue-600 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="bg-blue-400 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="bg-pink-600 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Official Info</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>EIPL APILA, Kokapet Hyderabad-500075</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span>+91 7672 000 933</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>info@urbanhelp.co.in</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-600 pt-6 text-center">
+                <p>2025 © All rights reserved by Urban Help</p>
+            </div>
+        </div>
+        
+        <!-- Back to Top Button -->
+        <a href="#" class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-md shadow-lg hover:bg-primary/90">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </footer>
+
+    <!-- JavaScript for mobile menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                // Toggle menu icon
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Close menu when clicking the close button
+            closeMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+            
+            // Close menu when clicking outside
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

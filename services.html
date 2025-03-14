@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Urban Help</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4267B2', // Updated to the specified blue
+                        secondary: '#EFF6FF', // Updated to the specified light blue
+                        accent: '#4267B2', // Using the same blue for accent
+                        lightBlue: '#EFF6FF' // Adding the light blue as a named color
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 70px; /* Adjust based on your header height */
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px; /* Smaller padding for mobile */
+            }
+        }
+
+        /* Tab styles */
+        .service-tab.active {
+            background-color: #4267B2;
+            color: white;
+        }
+
+        .service-content {
+            display: none;
+        }
+
+        .service-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Sticky Header with Logo -->
+    <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 md:h-12 w-auto">
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden z-30" id="mobileMenuBtn">
+                    <i class="fas fa-bars text-primary text-2xl"></i>
+                </button>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 font-medium hover:text-primary">Home</a>
+                    <a href="about-us.html" class="text-gray-600 font-medium hover:text-primary">About Us</a>
+                    <a href="services.html" class="text-primary font-medium hover:text-primary/80 border-b-2 border-primary">Services</a>
+                </nav>
+                
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex space-x-3">
+                    <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-all">Log In</a>
+                    <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-all">Register</a>
+                </div>
+                
+                <!-- Mobile Menu Overlay -->
+                <div class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileMenu">
+                    <div class="bg-white h-full w-64 p-6 absolute right-0 top-0 shadow-lg">
+                        <div class="flex justify-end mb-6">
+                            <button class="text-primary text-2xl" id="closeMenuBtn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="flex flex-col space-y-4">
+                            <a href="index.html" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Home</a>
+                            <a href="about-us.html" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">About Us</a>
+                            <a href="services.html" class="text-primary font-medium hover:text-primary/80 border-b border-gray-200 pb-2">Services</a>
+                            <div class="pt-4 flex flex-col space-y-2">
+                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 text-center">Log In</a>
+                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 text-center">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Hero Section -->
+    <section class="relative bg-gradient-to-r from-primary to-primary/80 py-16 md:py-20">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="container mx-auto px-4 md:px-8 relative z-10">
+            <div class="text-center text-white">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Our Services</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">Comprehensive home care solutions tailored to your needs with professional, reliable, and experienced staff.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Comprehensive Home Care Solutions</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    At Urban Help, we offer a wide range of professional services designed to make your life easier and your home more comfortable.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service Overview 1 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-broom text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Home Cleaning</h3>
+                    <p class="text-gray-700 mb-4">
+                        Professional cleaning services for homes of all sizes, from regular maintenance to deep cleaning.
+                    </p>
+                    <a href="#house-cleaning" class="text-primary font-medium hover:text-primary/80">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service Overview 2 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-utensils text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Kitchen & Cooking</h3>
+                    <p class="text-gray-700 mb-4">
+                        Kitchen cleaning services and personal chef options for delicious, healthy meals.
+                    </p>
+                    <a href="#kitchen-cooking" class="text-primary font-medium hover:text-primary/80">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <!-- Service Overview 3 -->
+                <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-white p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary mb-3">Care Services</h3>
+                    <p class="text-gray-700 mb-4">
+                        Compassionate care services for elderly family members and professional childcare.
+                    </p>
+                    <a href="#care-services" class="text-primary font-medium hover:text-primary/80">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Services Section -->
+    <section class="py-16 bg-lightBlue" id="detailed-services">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Explore Our Services</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    Each of our services is designed with your needs in mind, delivered by trained professionals who care about quality.
+                </p>
+            </div>
+
+            <!-- Service Tabs -->
+            <div class="flex flex-wrap justify-center mb-8">
+                <button class="service-tab active px-6 py-3 m-1 rounded-md font-medium transition-all" data-target="house-cleaning">House Cleaning</button>
+                <button class="service-tab px-6 py-3 m-1 rounded-md font-medium transition-all bg-white text-primary" data-target="kitchen-cleaning">Kitchen Cleaning</button>
+                <button class="service-tab px-6 py-3 m-1 rounded-md font-medium transition-all bg-white text-primary" data-target="personal-chef">Personal Chef</button>
+                <button class="service-tab px-6 py-3 m-1 rounded-md font-medium transition-all bg-white text-primary" data-target="elderly-care">Elderly Care</button>
+                <button class="service-tab px-6 py-3 m-1 rounded-md font-medium transition-all bg-white text-primary" data-target="childcare">Childcare</button>
+            </div>
+
+            <!-- Service Content -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <!-- House Cleaning Content -->
+                <div id="house-cleaning" class="service-content active">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/2">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/woman-standing-with-spray-bottle-napkin-kitchen%201-dJLVfG7GcLB9GWgqSCZRmnCh8y18Oo.png" alt="House Cleaning Service" class="rounded-lg shadow-md w-full h-auto">
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-primary mb-4">House Cleaning</h3>
+                            <p class="text-gray-700 mb-4">
+                                Our professional house cleaning services are designed to keep your home spotless and comfortable. We use eco-friendly products and follow detailed cleaning protocols to ensure every corner of your home shines.
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">What's Included:</h4>
+                            <ul class="list-disc pl-5 mb-6 text-gray-700 space-y-2">
+                                <li>Dusting and wiping of all surfaces</li>
+                                <li>Vacuuming and mopping of floors</li>
+                                <li>Bathroom cleaning and sanitizing</li>
+                                <li>Kitchen cleaning (countertops, appliance exteriors)</li>
+                                <li>Bed making and linen changing (upon request)</li>
+                                <li>Window sill and baseboard cleaning</li>
+                            </ul>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">Service Options:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Regular Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Weekly or bi-weekly maintenance cleaning to keep your home consistently clean.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Deep Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Thorough cleaning of all areas, including hard-to-reach places and detailed attention.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Move-in/Move-out Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Comprehensive cleaning for when you're moving in or out of a property.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">One-time Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Perfect for special occasions or when you need a quick refresh.</p>
+                                </div>
+                            </div>
+                            
+                            <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 inline-block">Book House Cleaning</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kitchen Cleaning Content -->
+                <div id="kitchen-cleaning" class="service-content">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/2">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%204.34.07%E2%80%AFPM%201-flGRP0nrvslZn8J8YqcpRifGyIW3N1.png" alt="Kitchen Cleaning Service" class="rounded-lg shadow-md w-full h-auto">
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Kitchen Cleaning</h3>
+                            <p class="text-gray-700 mb-4">
+                                Our kitchen cleaning service focuses on the heart of your home, ensuring it's not just clean but hygienic and sanitized. We pay special attention to appliances, surfaces, and those hard-to-reach areas.
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">What's Included:</h4>
+                            <ul class="list-disc pl-5 mb-6 text-gray-700 space-y-2">
+                                <li>Deep cleaning of all countertops and surfaces</li>
+                                <li>Thorough cleaning of sink and fixtures</li>
+                                <li>Appliance cleaning (exterior and interior upon request)</li>
+                                <li>Cabinet fronts wiping and polishing</li>
+                                <li>Floor sweeping and mopping</li>
+                                <li>Dishwashing and organization</li>
+                                <li>Trash removal and bin cleaning</li>
+                            </ul>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">Service Options:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Standard Kitchen Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Regular cleaning to maintain a clean and organized kitchen.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Deep Kitchen Cleaning</h5>
+                                    <p class="text-gray-700 text-sm">Intensive cleaning including inside appliances, cabinets, and detailed scrubbing.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Post-Cooking Cleanup</h5>
+                                    <p class="text-gray-700 text-sm">Quick cleanup after meal preparation or special events.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Dishwashing Service</h5>
+                                    <p class="text-gray-700 text-sm">Regular or one-time dishwashing and kitchen organization.</p>
+                                </div>
+                            </div>
+                            
+                            <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 inline-block">Book Kitchen Cleaning</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Personal Chef Content -->
+                <div id="personal-chef" class="service-content">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/2">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%2012.48.01%E2%80%AFPM-yJnNdhCblE5qtvcTiqlVVH5kx82tki.png" alt="Personal Chef Service" class="rounded-lg shadow-md w-full h-auto">
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Personal Chef</h3>
+                            <p class="text-gray-700 mb-4">
+                                Our personal chef service brings culinary expertise to your kitchen. Whether you need daily meals, special occasion dining, or meal prep for the week, our chefs create delicious, nutritious food tailored to your preferences.
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">What's Included:</h4>
+                            <ul class="list-disc pl-5 mb-6 text-gray-700 space-y-2">
+                                <li>Customized menu planning based on your preferences</li>
+                                <li>Grocery shopping for fresh ingredients</li>
+                                <li>Meal preparation in your kitchen</li>
+                                <li>Proper food storage with heating instructions</li>
+                                <li>Kitchen cleanup after cooking</li>
+                                <li>Dietary accommodation (vegetarian, vegan, gluten-free, etc.)</li>
+                            </ul>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">Service Options:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Daily Meal Preparation</h5>
+                                    <p class="text-gray-700 text-sm">Fresh meals prepared daily in your home.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Weekly Meal Prep</h5>
+                                    <p class="text-gray-700 text-sm">Multiple meals prepared at once for the week ahead.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Special Occasion Dining</h5>
+                                    <p class="text-gray-700 text-sm">Gourmet meals for dinner parties, celebrations, or romantic dinners.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Cooking Classes</h5>
+                                    <p class="text-gray-700 text-sm">Learn to prepare your favorite dishes with guidance from our chefs.</p>
+                                </div>
+                            </div>
+                            
+                            <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 inline-block">Book Personal Chef</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Elderly Care Content -->
+                <div id="elderly-care" class="service-content">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/2">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%2012.52.46%E2%80%AFPM-2OXOsBSEtGrWf7jiHkDOPX9cKNZjd0.png" alt="Elderly Care Service" class="rounded-lg shadow-md w-full h-auto">
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Elderly Care</h3>
+                            <p class="text-gray-700 mb-4">
+                                Our elderly care services provide compassionate support for seniors, helping them maintain independence and quality of life in the comfort of their own homes. Our caregivers are trained to provide both practical assistance and emotional support.
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">What's Included:</h4>
+                            <ul class="list-disc pl-5 mb-6 text-gray-700 space-y-2">
+                                <li>Personal care assistance (bathing, grooming, dressing)</li>
+                                <li>Medication reminders</li>
+                                <li>Meal preparation and feeding assistance</li>
+                                <li>Light housekeeping</li>
+                                <li>Companionship and conversation</li>
+                                <li>Mobility assistance</li>
+                                <li>Transportation to appointments</li>
+                                <li>Shopping and errands</li>
+                            </ul>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">Service Options:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Part-time Care</h5>
+                                    <p class="text-gray-700 text-sm">A few hours of assistance daily or several times per week.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Full-time Care</h5>
+                                    <p class="text-gray-700 text-sm">Comprehensive daily care for seniors who need regular assistance.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Overnight Care</h5>
+                                    <p class="text-gray-700 text-sm">Supervision and assistance during nighttime hours.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Respite Care</h5>
+                                    <p class="text-gray-700 text-sm">Temporary relief for family caregivers who need a break.</p>
+                                </div>
+                            </div>
+                            
+                            <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 inline-block">Book Elderly Care</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Childcare Content -->
+                <div id="childcare" class="service-content">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/2">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-08%20at%2012.48.39%E2%80%AFPM-TOKIsf7Jl2LchXV6JRFaSlyeOY2G9h.png" alt="Childcare Service" class="rounded-lg shadow-md w-full h-auto">
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Childcare</h3>
+                            <p class="text-gray-700 mb-4">
+                                Our childcare services provide safe, nurturing care for children of all ages. Our professional babysitters and nannies are thoroughly vetted, trained in child development, and committed to creating a positive environment for your children.
+                            </p>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">What's Included:</h4>
+                            <ul class="list-disc pl-5 mb-6 text-gray-700 space-y-2">
+                                <li>Age-appropriate activities and play</li>
+                                <li>Meal preparation and feeding</li>
+                                <li>Homework assistance</li>
+                                <li>Bathing and bedtime routines</li>
+                                <li>Light housekeeping related to childcare</li>
+                                <li>Transportation to/from school or activities</li>
+                                <li>Basic first aid knowledge</li>
+                            </ul>
+                            
+                            <h4 class="text-xl font-semibold text-primary mb-3">Service Options:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Occasional Babysitting</h5>
+                                    <p class="text-gray-700 text-sm">On-demand childcare for date nights, appointments, or special events.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Regular Nanny Service</h5>
+                                    <p class="text-gray-700 text-sm">Consistent childcare on a scheduled basis, part-time or full-time.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">After-School Care</h5>
+                                    <p class="text-gray-700 text-sm">Supervision, homework help, and activities after school hours.</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-md p-4">
+                                    <h5 class="font-semibold text-primary mb-2">Vacation/Holiday Care</h5>
+                                    <p class="text-gray-700 text-sm">Full-day childcare during school breaks or holidays.</p>
+                                </div>
+                            </div>
+                            
+                            <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 inline-block">Book Childcare</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-16 bg-white" id="pricing">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Our Pricing</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    We offer competitive rates with flexible packages to suit your needs and budget. Contact us for a personalized quote.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Package -->
+                <div class="bg-lightBlue rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-primary text-white p-6 text-center">
+                        <h3 class="text-2xl font-bold">Basic Package</h3>
+                        <div class="text-3xl font-bold mt-2">₹999<span class="text-sm font-normal">/session</span></div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Standard cleaning (2 hours)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">One professional cleaner</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Basic supplies included</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Suitable for small apartments</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Available on weekdays</span>
+                            </li>
+                        </ul>
+                        <a href="#booking" class="block text-center bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 transition-all">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Standard Package -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform scale-105 border-2 border-primary">
+                    <div class="bg-primary text-white p-6 text-center">
+                        <span class="bg-white text-primary text-xs font-bold px-3 py-1 rounded-full uppercase">Most Popular</span>
+                        <h3 class="text-2xl font-bold mt-2">Standard Package</h3>
+                        <div class="text-3xl font-bold mt-2">₹1,999<span class="text-sm font-normal">/session</span></div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Comprehensive cleaning (4 hours)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Two professional cleaners</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">All supplies included</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Suitable for houses up to 3 bedrooms</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Available all days including weekends</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">10% discount on recurring bookings</span>
+                            </li>
+                        </ul>
+                        <a href="#booking" class="block text-center bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 transition-all">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Premium Package -->
+                <div class="bg-lightBlue rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-primary text-white p-6 text-center">
+                        <h3 class="text-2xl font-bold">Premium Package</h3>
+                        <div class="text-3xl font-bold mt-2">₹3,499<span class="text-sm font-normal">/session</span></div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Deep cleaning (6+ hours)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Team of professional cleaners</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Premium eco-friendly supplies</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Suitable for large homes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Priority scheduling</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">15% discount on recurring bookings</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                <span class="text-gray-700">Complimentary add-on service</span>
+                            </li>
+                        </ul>
+                        <a href="#booking" class="block text-center bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 transition-all">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <p class="text-gray-700">
+                    Need a custom solution? <a href="#contact" class="text-primary font-medium hover:text-primary/80">Contact us</a> for personalized packages.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="py-16 bg-lightBlue" id="booking">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Book a Service</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    Ready to experience the Urban Help difference? Book your service now and enjoy professional, reliable care for your home and family.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name*</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address*</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number*</label>
+                            <input type="tel" id="phone" name="phone" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="address" class="block text-gray-700 font-medium mb-2">Address*</label>
+                            <input type="text" id="address" name="address" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="service" class="block text-gray-700 font-medium mb-2">Service Type*</label>
+                            <select id="service" name="service" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                <option value="">Select a Service</option>
+                                <option value="house-cleaning">House Cleaning</option>
+                                <option value="kitchen-cleaning">Kitchen Cleaning</option>
+                                <option value="personal-chef">Personal Chef</option>
+                                <option value="elderly-care">Elderly Care</option>
+                                <option value="childcare">Childcare</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="date" class="block text-gray-700 font-medium mb-2">Preferred Date*</label>
+                            <input type="date" id="date" name="date" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="time" class="block text-gray-700 font-medium mb-2">Preferred Time*</label>
+                            <select id="time" name="time" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                <option value="">Select a Time</option>
+                                <option value="morning">Morning (8AM - 12PM)</option>
+                                <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                                <option value="evening">Evening (4PM - 8PM)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="package" class="block text-gray-700 font-medium mb-2">Package*</label>
+                            <select id="package" name="package" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                <option value="">Select a Package</option>
+                                <option value="basic">Basic Package</option>
+                                <option value="standard">Standard Package</option>
+                                <option value="premium">Premium Package</option>
+                                <option value="custom">Custom Package</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-700 font-medium mb-2">Special Instructions</label>
+                        <textarea id="message" name="message" rows="4" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    <button type="submit" class="bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 w-full">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-primary mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-700 max-w-3xl mx-auto">
+                    Find answers to common questions about our services.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        <button class="flex justify-between items-center w-full p-4 text-left bg-white">
+                            <span class="font-medium text-primary">How do I schedule a service?</span>
+                            <span class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </button>
+                        <div class="bg-lightBlue border-t border-gray-100 p-4 hidden">
+                            <p class="text-gray-700">
+                                You can schedule a service through our website by filling out the booking form, calling our customer service line, or using our mobile app. We'll confirm your appointment within 2 hours.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        <button class="flex justify-between items-center w-full p-4 text-left bg-white">
+                            <span class="font-medium text-primary">What if I need to reschedule or cancel?</span>
+                            <span class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </button>
+                        <div class="bg-lightBlue border-t border-gray-100 p-4 hidden">
+                            <p class="text-gray-700">
+                                You can reschedule or cancel your appointment up to 24 hours before the scheduled service without any charge. For changes within 24 hours, a small fee may apply.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        <button class="flex justify-between items-center w-full p-4 text-left bg-white">
+                            <span class="font-medium text-primary">Are your staff vetted and insured?</span>
+                            <span class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </button>
+                        <div class="bg-lightBlue border-t border-gray-100 p-4 hidden">
+                            <p class="text-gray-700">
+                                Yes, all our staff undergo thorough background checks, reference verification, and are fully insured. We prioritize your safety and peace of mind.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        <button class="flex justify-between items-center w-full p-4 text-left bg-white">
+                            <span class="font-medium text-primary">Do you provide the cleaning supplies?</span>
+                            <span class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </button>
+                        <div class="bg-lightBlue border-t border-gray-100 p-4 hidden">
+                            <p class="text-gray-700">
+                                Yes, our team brings all necessary cleaning supplies and equipment. If you prefer specific products or have allergies, please let us know in advance.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        <button class="flex justify-between items-center w-full p-4 text-left bg-white">
+                            <span class="font-medium text-primary">What payment methods do you accept?</span>
+                            <span class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </button>
+                        <div class="bg-lightBlue border-t border-gray-100 p-4 hidden">
+                            <p class="text-gray-700">
+                                We accept all major credit cards, UPI payments, net banking, and cash. Payment is typically collected after the service is completed to your satisfaction.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white pt-12 pb-6">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 bg-white p-1 rounded-md mr-2">
+                        <span class="text-white font-bold text-xl">Urban Help</span>
+                    </div>
+                    <p class="mb-4">We work with experienced and professional cleaners to deliver outstanding service.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>Mon - Sun: 8am - 8pm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter to get our latest updates & news.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email address" class="p-3 rounded-l-md w-full text-gray-800">
+                        <button class="bg-primary text-white p-3 rounded-r-md border border-white">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="bg-blue-600 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="bg-blue-400 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="bg-pink-600 text-white p-2 rounded-md hover:bg-opacity-90"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Official Info</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>EIPL APILA, Kokapet Hyderabad-500075</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span>+91 7672 000 933</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>info@urbanhelp.co.in</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-600 pt-6 text-center">
+                <p>2025 © All rights reserved by Urban Help</p>
+            </div>
+        </div>
+        
+        <!-- Back to Top Button -->
+        <a href="#" class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-md shadow-lg hover:bg-primary/90">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </footer>
+
+    <!-- JavaScript for mobile menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                // Toggle menu icon
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            
+            // Close menu when clicking the close button
+            closeMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+            
+            // Close menu when clicking outside
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+
+            // Service Tabs
+            const serviceTabs = document.querySelectorAll('.service-tab');
+            const serviceContents = document.querySelectorAll('.service-content');
+            
+            serviceTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    serviceTabs.forEach(t => {
+                        t.classList.remove('active');
+                        t.classList.add('bg-white', 'text-primary');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    this.classList.remove('bg-white', 'text-primary');
+                    
+                    // Hide all content
+                    serviceContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show corresponding content
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            // FAQ Toggles
+            const faqButtons = document.querySelectorAll('.border.border-gray-200 button');
+            
+            faqButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    // Toggle content visibility
+                    content.classList.toggle('hidden');
+                    
+                    // Toggle icon
+                    if (content.classList.contains('hidden')) {
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
+                    } else {
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

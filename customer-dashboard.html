@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Dashboard - Urban Help</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#4267B2', // Updated to the specified blue
+                    secondary: '#EFF6FF', // Updated to the specified light blue
+                    accent: '#4267B2', // Using the same blue for accent
+                    lightBlue: '#EFF6FF' // Adding the light blue as a named color
+                }
+            }
+        }
+    }
+</script>
+<style>
+    /* Add padding to body to account for fixed header */
+    body {
+        padding-top: 70px; /* Adjust based on your header height */
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 60px; /* Smaller padding for mobile */
+        }
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+        height: calc(100vh - 70px);
+        position: sticky;
+        top: 70px;
+    }
+
+    /* Address card styles */
+    .address-card.active {
+        border-color: #4267B2;
+        background-color: #EFF6FF;
+    }
+</style>
+</head>
+<body class="font-sans bg-gray-50">
+<!-- Sticky Header with Logo -->
+<header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-4 md:px-8 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html" class="flex items-center">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 md:h-12 w-auto">
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden z-30" id="mobileMenuBtn">
+                <i class="fas fa-bars text-primary text-2xl"></i>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">Dashboard</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">Book Service</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">My Bookings</a>
+            </nav>
+            
+            <!-- User Menu -->
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="relative">
+                    <button class="flex items-center space-x-2 focus:outline-none" id="userMenuBtn">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="text-gray-700">John Doe</span>
+                        <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="userMenu">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                        <div class="border-t border-gray-100"></div>
+                        <a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileMenu">
+                <div class="bg-white h-full w-64 p-6 absolute right-0 top-0 shadow-lg">
+                    <div class="flex justify-end mb-6">
+                        <button class="text-primary text-2xl" id="closeMenuBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="flex flex-col space-y-4">
+                        <div class="flex items-center space-x-2 mb-6 pb-4 border-b border-gray-200">
+                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">John Doe</span>
+                        </div>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Dashboard</a>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Book Service</a>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">My Bookings</a>
+                        <div class="pt-4 flex flex-col space-y-2">
+                            <a href="#" class="text-gray-600 hover:text-primary">Profile</a>
+                            <a href="#" class="text-gray-600 hover:text-primary">Settings</a>
+                            <a href="login.html" class="text-red-600 hover:text-red-800">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container mx-auto px-4 md:px-8 py-6">
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Sidebar -->
+        <div class="w-full md:w-1/4 lg:w-1/5">
+            <div class="bg-white rounded-lg shadow-md p-4 sidebar">
+                <h2 class="text-lg font-semibold text-primary mb-4">My Account</h2>
+                <div class="space-y-2">
+                    <a href="#" class="flex items-center p-2 rounded-md bg-lightBlue text-primary">
+                        <i class="fas fa-user-circle mr-3 w-5 text-center"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="#" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-calendar-alt mr-3 w-5 text-center"></i>
+                        <span>My Bookings</span>
+                    </a>
+                    <a href="#" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-history mr-3 w-5 text-center"></i>
+                        <span>Booking History</span>
+                    </a>
+                    <a href="#" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-star mr-3 w-5 text-center"></i>
+                        <span>Reviews</span>
+                    </a>
+                    <a href="#" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-credit-card mr-3 w-5 text-center"></i>
+                        <span>Payment Methods</span>
+                    </a>
+                    <a href="#" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-cog mr-3 w-5 text-center"></i>
+                        <span>Account Settings</span>
+                    </a>
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="login.html" class="flex items-center p-2 rounded-md text-red-600 hover:bg-red-50">
+                        <i class="fas fa-sign-out-alt mr-3 w-5 text-center"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="w-full md:w-3/4 lg:w-4/5">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-primary">My Profile</h1>
+                    <button type="button" class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90">Save Changes</button>
+                </div>
+                
+                <!-- Profile Content -->
+                <div class="space-y-8">
+                    <!-- Personal Information Tab -->
+                    <div id="personal-info" class="border-b border-gray-200 pb-8">
+                        <h2 class="text-xl font-semibold text-primary mb-6">Personal Information</h2>
+                        <form>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                    <input type="text" id="fullName" name="fullName" value="John Doe" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <input type="email" id="email" name="email" value="john.doe@example.com" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" value="+91 9876543210" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="alternatePhone" class="block text-sm font-medium text-gray-700 mb-1">Alternate Phone (Optional)</label>
+                                    <input type="tel" id="alternatePhone" name="alternatePhone" placeholder="Enter alternate phone number" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div class="border-t border-gray-200 pt-4 mt-4">
+                                <h3 class="text-lg font-medium text-primary mb-4">Change Password</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="currentPassword" class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                                        <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                                            <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Addresses Tab -->
+                    <div id="addresses" class="border-b border-gray-200 pb-8 pt-8">
+                        <h2 class="text-xl font-semibold text-primary mb-6">Addresses</h2>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-primary">Saved Addresses</h3>
+                                <button type="button" id="addAddressBtn" class="text-primary flex items-center text-sm">
+                                    <i class="fas fa-plus-circle mr-1"></i> Add New Address
+                                </button>
+                            </div>
+                            
+                            <!-- Address Cards -->
+                            <div class="space-y-4" id="addressContainer">
+                                <!-- Address 1 -->
+                                <div class="address-card active border rounded-md p-4 relative">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <div class="flex items-center mb-2">
+                                                <h4 class="font-medium">Home</h4>
+                                                <span class="ml-2 bg-primary text-white text-xs px-2 py-0.5 rounded-full">Default</span>
+                                            </div>
+                                            <p class="text-gray-700">123 Main Street, Apartment 4B</p>
+                                            <p class="text-gray-700">Hyderabad, Telangana 500081</p>
+                                            <p class="text-gray-700 mt-1">Near Central Park</p>
+                                        </div>
+                                        <div class="flex flex-col space-y-2">
+                                            <button type="button" class="text-primary hover:text-primary/80 text-sm edit-address-btn">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button type="button" class="text-red-600 hover:text-red-800 text-sm delete-address-btn">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Address 2 -->
+                                <div class="address-card border rounded-md p-4 relative">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <div class="flex items-center mb-2">
+                                                <h4 class="font-medium">Office</h4>
+                                            </div>
+                                            <p class="text-gray-700">456 Business Park, Building C, Floor 3</p>
+                                            <p class="text-gray-700">Hyderabad, Telangana 500032</p>
+                                            <p class="text-gray-700 mt-1">HITEC City</p>
+                                        </div>
+                                        <div class="flex flex-col space-y-2">
+                                            <button type="button" class="text-primary hover:text-primary/80 text-sm edit-address-btn">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button type="button" class="text-red-600 hover:text-red-800 text-sm delete-address-btn">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                            <button type="button" class="text-gray-600 hover:text-gray-800 text-sm set-default-btn">
+                                                <i class="far fa-star"></i> Set as Default
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add/Edit Address Form (Initially Hidden) -->
+                            <div id="addressForm" class="border rounded-md p-4 mt-4 hidden">
+                                <h4 class="font-medium text-primary mb-4">Add New Address</h4>
+                                <form>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <label for="addressType" class="block text-sm font-medium text-gray-700 mb-1">Address Type</label>
+                                            <select id="addressType" name="addressType" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                                <option value="home">Home</option>
+                                                <option value="office">Office</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="addressLine1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1</label>
+                                            <input type="text" id="addressLine1" name="addressLine1" placeholder="House/Flat No., Street" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="addressLine2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+                                            <input type="text" id="addressLine2" name="addressLine2" placeholder="Apartment, Building, Floor" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="landmark" class="block text-sm font-medium text-gray-700 mb-1">Landmark (Optional)</label>
+                                            <input type="text" id="landmark" name="landmark" placeholder="Nearby landmark for easy location" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                            <input type="text" id="city" name="city" placeholder="City" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                                            <input type="text" id="state" name="state" placeholder="State" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="pincode" class="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+                                            <input type="text" id="pincode" name="pincode" placeholder="Pincode" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" id="makeDefault" name="makeDefault" class="text-primary rounded focus:ring-primary mr-2">
+                                                <span class="text-sm text-gray-700">Make this my default address</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-end space-x-2">
+                                        <button type="button" id="cancelAddressBtn" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
+                                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">Save Address</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Household Details Tab -->
+                    <div id="household" class="pt-8">
+                        <h2 class="text-xl font-semibold text-primary mb-6">Household Details</h2>
+                        <form>
+                            <!-- Household Details Section -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium text-primary mb-4">Household Details</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="propertyType" class="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
+                                        <select id="propertyType" name="propertyType" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select property type</option>
+                                            <option value="apartment" selected>Apartment</option>
+                                            <option value="house">House</option>
+                                            <option value="villa">Villa</option>
+                                            <option value="office">Office</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="propertySize" class="block text-sm font-medium text-gray-700 mb-1">Property Size (sq. ft.)</label>
+                                        <input type="number" id="propertySize" name="propertySize" value="1200" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-1">Number of Bedrooms</label>
+                                        <select id="bedrooms" name="bedrooms" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="1">1</option>
+                                            <option value="2" selected>2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5+">5+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="bathrooms" class="block text-sm font-medium text-gray-700 mb-1">Number of Bathrooms</label>
+                                        <select id="bathrooms" name="bathrooms" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="1">1</option>
+                                            <option value="2" selected>2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5+">5+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Special Instructions Section -->
+                            <div class="mb-6 border-t border-gray-200 pt-6">
+                                <h3 class="text-lg font-medium text-primary mb-4">Special Instructions</h3>
+                                <div class="mb-4">
+                                    <label for="cleaningInstructions" class="block text-sm font-medium text-gray-700 mb-1">Cleaning Instructions</label>
+                                    <textarea id="cleaningInstructions" name="cleaningInstructions" rows="3" placeholder="Any specific cleaning preferences or areas that need special attention..." class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">Please use eco-friendly cleaning products only. Extra attention needed in the kitchen area.</textarea>
+                                </div>
+                                <div>
+                                    <label for="additionalNotes" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+                                    <textarea id="additionalNotes" name="additionalNotes" rows="3" placeholder="Any other information that might be helpful..." class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">Please call 10 minutes before arrival.</textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Pets Section -->
+                            <div class="mb-6 border-t border-gray-200 pt-6">
+                                <h3 class="text-lg font-medium text-primary mb-4">Pets in Home</h3>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Do you have pets?</label>
+                                    <div class="flex space-x-4">
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" name="hasPets" value="yes" class="text-primary focus:ring-primary" checked>
+                                            <span class="ml-2">Yes</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" name="hasPets" value="no" class="text-primary focus:ring-primary">
+                                            <span class="ml-2">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div id="petDetails" class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md">
+                                        <div>
+                                            <label for="petType1" class="block text-xs font-medium text-gray-700 mb-1">Pet Type</label>
+                                            <select id="petType1" name="petType[]" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                                <option value="dog" selected>Dog</option>
+                                                <option value="cat">Cat</option>
+                                                <option value="bird">Bird</option>
+                                                <option value="fish">Fish</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="petBreed1" class="block text-xs font-medium text-gray-700 mb-1">Breed/Description</label>
+                                            <input type="text" id="petBreed1" name="petBreed[]" value="Labrador" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="petNotes1" class="block text-xs font-medium text-gray-700 mb-1">Special Notes</label>
+                                            <input type="text" id="petNotes1" name="petNotes[]" value="Friendly, but keep bathroom door closed" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md">
+                                        <div>
+                                            <label for="petType2" class="block text-xs font-medium text-gray-700 mb-1">Pet Type</label>
+                                            <select id="petType2" name="petType[]" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                                <option value="dog">Dog</option>
+                                                <option value="cat" selected>Cat</option>
+                                                <option value="bird">Bird</option>
+                                                <option value="fish">Fish</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="petBreed2" class="block text-xs font-medium text-gray-700 mb-1">Breed/Description</label>
+                                            <input type="text" id="petBreed2" name="petBreed[]" value="Siamese" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label for="petNotes2" class="block text-xs font-medium text-gray-700 mb-1">Special Notes</label>
+                                            <input type="text" id="petNotes2" name="petNotes[]" value="Shy, may hide under furniture" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" id="addMorePet" class="mt-2 text-primary text-sm flex items-center">
+                                    <i class="fas fa-plus-circle mr-1"></i> Add Another Pet
+                                </button>
+                            </div>
+                            
+                            <!-- Accessibility Needs Section -->
+                            <div class="mb-6 border-t border-gray-200 pt-6">
+                                <h3 class="text-lg font-medium text-primary mb-4">Accessibility Needs</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                    <div>
+                                        <label for="accessCode" class="block text-sm font-medium text-gray-700 mb-1">Gate/Door Access Code</label>
+                                        <input type="text" id="accessCode" name="accessCode" value="1234" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="securitySystem" class="block text-sm font-medium text-gray-700 mb-1">Security System Instructions</label>
+                                        <input type="text" id="securitySystem" name="securitySystem" placeholder="Any details about your security system" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Property Access Features</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="accessFeatures[]" value="stairs" class="text-primary rounded focus:ring-primary mr-2" checked>
+                                            <span>Stairs (no elevator)</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="accessFeatures[]" value="elevator" class="text-primary rounded focus:ring-primary mr-2" checked>
+                                            <span>Elevator available</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="accessFeatures[]" value="parking" class="text-primary rounded focus:ring-primary mr-2">
+                                            <span>Parking available for service provider</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="accessFeatures[]" value="reception" class="text-primary rounded focus:ring-primary mr-2">
+                                            <span>Check-in at reception/security</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="accessibilityNotes" class="block text-sm font-medium text-gray-700 mb-1">Additional Accessibility Notes</label>
+                                    <textarea id="accessibilityNotes" name="accessibilityNotes" rows="3" placeholder="Any other accessibility information..." class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">Building has 3 floors, apartment is on the 2nd floor. Elevator is available but sometimes out of service. If elevator is not working, use staircase B.</textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="flex justify-end space-x-4">
+                                <button type="button" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-md font-medium hover:bg-gray-300">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="px-6 py-3 bg-primary text-white rounded-md font-medium hover:bg-primary/90">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-primary text-white pt-12 pb-6 mt-12">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <!-- Column 1 -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 bg-white p-1 rounded-md mr-2">
+                    <span class="text-white font-bold text-xl">Urban Help</span>
+                </div>
+                <p class="mb-4">We work with experienced and professional cleaners to deliver outstanding service.</p>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>Mon - Sun: 8am - 8pm</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 2 -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Customer Support</h3>
+                <p class="mb-4">Need help with your booking or have questions?</p>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span>+91 7672 000 933</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>support@urbanhelp.co.in</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 3 -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                <div class="space-y-2">
+                    <div>
+                        <a href="#" class="text-white hover:underline">Book a Service</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">FAQs</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">Terms of Service</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-600 pt-6 text-center">
+            <p>2025 © All rights reserved by Urban Help</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript for functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            // Toggle menu icon
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close menu when clicking the close button
+        closeMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+        
+        // Close menu when clicking outside
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        });
+
+        // User Menu Toggle
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (userMenuBtn && userMenu) {
+            userMenuBtn.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close user menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Address Card Selection
+        const addressCards = document.querySelectorAll('.address-card');
+        
+        addressCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't select if clicking on a button
+                if (e.target.closest('button')) return;
+                
+                // Toggle active class
+                addressCards.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Address Form Toggle
+        const addAddressBtn = document.getElementById('addAddressBtn');
+        const addressForm = document.getElementById('addressForm');
+        const cancelAddressBtn = document.getElementById('cancelAddressBtn');
+        
+        if (addAddressBtn && addressForm && cancelAddressBtn) {
+            addAddressBtn.addEventListener('click', function() {
+                addressForm.classList.remove('hidden');
+                addressForm.querySelector('h4').textContent = 'Add New Address';
+            });
+            
+            cancelAddressBtn.addEventListener('click', function() {
+                addressForm.classList.add('hidden');
+            });
+            
+            // Edit Address Button
+            const editAddressBtns = document.querySelectorAll('.edit-address-btn');
+            
+            editAddressBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    addressForm.classList.remove('hidden');
+                    addressForm.querySelector('h4').textContent = 'Edit Address';
+                    // Here you would typically populate the form with the address data
+                });
+            });
+        }
+
+        // Add More Pet
+        const addMorePetBtn = document.getElementById('addMorePet');
+        const petDetailsContainer = document.getElementById('petDetails');
+        let petCount = 2; // Already have 2 pets in the HTML
+        
+        if (addMorePetBtn && petDetailsContainer) {
+            addMorePetBtn.addEventListener('click', function() {
+                petCount++;
+                
+                const newPet = document.createElement('div');
+                newPet.className = 'grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md';
+                newPet.innerHTML = `
+                    <div>
+                        <label for="petType${petCount}" class="block text-xs font-medium text-gray-700 mb-1">Pet Type</label>
+                        <select id="petType${petCount}" name="petType[]" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="fish">Fish</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="petBreed${petCount}" class="block text-xs font-medium text-gray-700 mb-1">Breed/Description</label>
+                        <input type="text" id="petBreed${petCount}" name="petBreed[]" placeholder="Enter breed or description" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="petNotes${petCount}" class="block text-xs font-medium text-gray-700 mb-1">Special Notes</label>
+                        <input type="text" id="petNotes${petCount}" name="petNotes[]" placeholder="Any special instructions" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                `;
+                
+                petDetailsContainer.appendChild(newPet);
+            });
+        }
+
+        // Form Submission
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the form data to your server
+                // For now, we'll just show an alert
+                alert('Changes saved successfully!');
+            });
+        });
+    });
+</script>
+</body>
+</html>
+

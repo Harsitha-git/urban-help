@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Dashboard - Urban Help</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#4267B2', // Updated to the specified blue
+                    secondary: '#EFF6FF', // Updated to the specified light blue
+                    accent: '#4267B2', // Using the same blue for accent
+                    lightBlue: '#EFF6FF' // Adding the light blue as a named color
+                }
+            }
+        }
+    }
+</script>
+<style>
+    /* Add padding to body to account for fixed header */
+    body {
+        padding-top: 70px; /* Adjust based on your header height */
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding-top: 60px; /* Smaller padding for mobile */
+        }
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+        height: calc(100vh - 70px);
+        position: sticky;
+        top: 70px;
+    }
+
+    /* File upload styles */
+    .file-upload-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .file-upload-container input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: pointer;
+        display: block;
+    }
+
+    /* Time picker styles */
+    .time-picker {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+</style>
+</head>
+<body class="font-sans bg-gray-50">
+<!-- Sticky Header with Logo -->
+<header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+    <div class="container mx-auto px-4 md:px-8 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html" class="flex items-center">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 md:h-12 w-auto">
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden z-30" id="mobileMenuBtn">
+                <i class="fas fa-bars text-primary text-2xl"></i>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">Dashboard</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">Bookings</a>
+                <a href="#" class="text-gray-600 font-medium hover:text-primary">Earnings</a>
+            </nav>
+            
+            <!-- User Menu -->
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="relative">
+                    <button class="flex items-center space-x-2 focus:outline-none" id="userMenuBtn">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="text-gray-700">Partner Name</span>
+                        <i class="fas fa-chevron-down text-gray-500 text-xs"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden" id="userMenu">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                        <div class="border-t border-gray-100"></div>
+                        <a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileMenu">
+                <div class="bg-white h-full w-64 p-6 absolute right-0 top-0 shadow-lg">
+                    <div class="flex justify-end mb-6">
+                        <button class="text-primary text-2xl" id="closeMenuBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="flex flex-col space-y-4">
+                        <div class="flex items-center space-x-2 mb-6 pb-4 border-b border-gray-200">
+                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="text-gray-700 font-medium">Partner Name</span>
+                        </div>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Dashboard</a>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Bookings</a>
+                        <a href="#" class="text-gray-600 font-medium hover:text-primary border-b border-gray-200 pb-2">Earnings</a>
+                        <div class="pt-4 flex flex-col space-y-2">
+                            <a href="#" class="text-gray-600 hover:text-primary">Profile</a>
+                            <a href="#" class="text-gray-600 hover:text-primary">Settings</a>
+                            <a href="login.html" class="text-red-600 hover:text-red-800">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container mx-auto px-4 md:px-8 py-6">
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Sidebar -->
+        <div class="w-full md:w-1/4 lg:w-1/5">
+            <div class="bg-white rounded-lg shadow-md p-4 sidebar">
+                <h2 class="text-lg font-semibold text-primary mb-4">Complete Your Profile</h2>
+                <div class="space-y-2">
+                    <a href="#business-info" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-building mr-3 w-5 text-center"></i>
+                        <span>Business Information</span>
+                    </a>
+                    <a href="#service-details" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-concierge-bell mr-3 w-5 text-center"></i>
+                        <span>Service Details</span>
+                    </a>
+                    <a href="#pricing" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-tags mr-3 w-5 text-center"></i>
+                        <span>Pricing & Add-ons</span>
+                    </a>
+                    <a href="#operations" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-calendar-alt mr-3 w-5 text-center"></i>
+                        <span>Operations</span>
+                    </a>
+                    <a href="#banking" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-university mr-3 w-5 text-center"></i>
+                        <span>Banking Details</span>
+                    </a>
+                    <a href="#media" class="flex items-center p-2 rounded-md hover:bg-lightBlue text-gray-700 hover:text-primary">
+                        <i class="fas fa-images mr-3 w-5 text-center"></i>
+                        <span>Logo & Photos</span>
+                    </a>
+                    <a href="login.html" class="flex items-center p-2 rounded-md text-red-600 hover:bg-red-50">
+                        <i class="fas fa-sign-out-alt mr-3 w-5 text-center"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="bg-lightBlue rounded-md p-4">
+                        <h3 class="font-medium text-primary mb-2">Profile Completion</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-primary h-2.5 rounded-full" style="width: 25%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">25% Complete</p>
+                        <p class="text-xs text-gray-500 mt-1">Complete your profile to start receiving bookings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="w-full md:w-3/4 lg:w-4/5">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-primary">Partner Dashboard</h1>
+                    <button type="button" class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90">Save Changes</button>
+                </div>
+                
+                <div class="text-sm text-gray-500 mb-8">
+                    <p>Welcome to your partner dashboard! Please complete your profile to start receiving bookings. All fields marked with * are required.</p>
+                </div>
+                
+                <form id="partnerProfileForm">
+                    <!-- Business Information Section -->
+                    <section id="business-info" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Business Information</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="businessLicense" class="block text-sm font-medium text-gray-700 mb-1">Business License/Tax ID*</label>
+                                <input type="text" id="businessLicense" name="businessLicense" placeholder="Enter your business license or tax ID" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Upload License Document*</label>
+                                <div class="file-upload-container">
+                                    <button type="button" class="w-full p-3 rounded-md border border-gray-300 bg-white text-gray-700 text-left flex items-center">
+                                        <i class="fas fa-upload mr-2"></i>
+                                        <span id="licenseFileName">Choose file...</span>
+                                    </button>
+                                    <input type="file" id="licenseFile" name="licenseFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Accepted formats: PDF, JPG, PNG (Max: 5MB)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="aadharNumber" class="block text-sm font-medium text-gray-700 mb-1">Business Owner Aadhar Number*</label>
+                                <input type="text" id="aadharNumber" name="aadharNumber" placeholder="Enter 12-digit Aadhar number" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Upload Aadhar Card*</label>
+                                <div class="file-upload-container">
+                                    <button type="button" class="w-full p-3 rounded-md border border-gray-300 bg-white text-gray-700 text-left flex items-center">
+                                        <i class="fas fa-upload mr-2"></i>
+                                        <span id="aadharFileName">Choose file...</span>
+                                    </button>
+                                    <input type="file" id="aadharFile" name="aadharFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Accepted formats: PDF, JPG, PNG (Max: 5MB)</p>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Service Details Section -->
+                    <section id="service-details" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Service Details</h2>
+                        
+                        <div class="mb-6">
+                            <label for="serviceDescription" class="block text-sm font-medium text-gray-700 mb-1">Detailed Service Description*</label>
+                            <textarea id="serviceDescription" name="serviceDescription" rows="4" placeholder="Describe your services in detail, including specialties, experience, and what sets you apart..." class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Service Categories*</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="serviceCategories[]" value="house_cleaning" class="text-primary rounded focus:ring-primary mr-2">
+                                        <span>House Cleaning</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="serviceCategories[]" value="kitchen_cleaning" class="text-primary rounded focus:ring-primary mr-2">
+                                        <span>Kitchen Cleaning</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="serviceCategories[]" value="personal_chef" class="text-primary rounded focus:ring-primary mr-2">
+                                        <span>Personal Chef</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="serviceCategories[]" value="elderly_care" class="text-primary rounded focus:ring-primary mr-2">
+                                        <span>Elderly Care</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="serviceCategories[]" value="childcare" class="text-primary rounded focus:ring-primary mr-2">
+                                        <span>Childcare</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Service Areas*</label>
+                                <textarea id="serviceAreas" name="serviceAreas" rows="5" placeholder="Enter ZIP codes, cities, or neighborhoods you serve (comma separated)" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Pricing & Add-ons Section -->
+                    <section id="pricing" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Pricing & Add-ons</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="pricingModel" class="block text-sm font-medium text-gray-700 mb-1">Pricing Model*</label>
+                                <select id="pricingModel" name="pricingModel" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                    <option value="">Select pricing model</option>
+                                    <option value="hourly">Hourly Rate</option>
+                                    <option value="flat">Flat Rate</option>
+                                    <option value="square_foot">Per Square Foot</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="basePrice" class="block text-sm font-medium text-gray-700 mb-1">Base Price (₹)*</label>
+                                <input type="number" id="basePrice" name="basePrice" placeholder="Enter your base price" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                <p class="text-xs text-gray-500 mt-1">For hourly: per hour, flat rate: per service, square foot: per sq.ft.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Add-On Services</label>
+                            <div id="addOnServices" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md">
+                                    <div>
+                                        <label for="addOnName1" class="block text-xs font-medium text-gray-700 mb-1">Service Name</label>
+                                        <input type="text" id="addOnName1" name="addOnName[]" placeholder="e.g., Deep Cleaning" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="addOnDescription1" class="block text-xs font-medium text-gray-700 mb-1">Description</label>
+                                        <input type="text" id="addOnDescription1" name="addOnDescription[]" placeholder="Brief description" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="addOnPrice1" class="block text-xs font-medium text-gray-700 mb-1">Price (₹)</label>
+                                        <input type="number" id="addOnPrice1" name="addOnPrice[]" placeholder="Additional price" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" id="addMoreAddOn" class="mt-2 text-primary text-sm flex items-center">
+                                <i class="fas fa-plus-circle mr-1"></i> Add More Add-On Service
+                            </button>
+                        </div>
+                        
+                        <div>
+                            <label for="commissionAgreement" class="block text-sm font-medium text-gray-700 mb-1">Service Fees/Commission</label>
+                            <div class="p-4 bg-lightBlue rounded-md">
+                                <p class="text-sm text-gray-700 mb-2">Urban Help charges a service fee of 10% on each booking. This fee covers platform maintenance, marketing, and customer support.</p>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="commissionAgreement" name="commissionAgreement" class="text-primary rounded focus:ring-primary mr-2" required>
+                                    <span class="text-sm">I understand and agree to the service fee structure</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Operations Section -->
+                    <section id="operations" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Operations</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label for="staffCount" class="block text-sm font-medium text-gray-700 mb-1">Number of Staff*</label>
+                                <input type="number" id="staffCount" name="staffCount" min="1" placeholder="Total staff members" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label for="maxBookings" class="block text-sm font-medium text-gray-700 mb-1">Max Daily Bookings*</label>
+                                <input type="number" id="maxBookings" name="maxBookings" min="1" placeholder="Maximum bookings per day" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label for="advanceBookingDays" class="block text-sm font-medium text-gray-700 mb-1">Advance Booking (Days)</label>
+                                <input type="number" id="advanceBookingDays" name="advanceBookingDays" min="1" placeholder="How many days in advance" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Working Hours*</label>
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-4 gap-4">
+                                    <div class="font-medium text-gray-700">Day</div>
+                                    <div class="font-medium text-gray-700">Available</div>
+                                    <div class="font-medium text-gray-700">Start Time</div>
+                                    <div class="font-medium text-gray-700">End Time</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Monday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="monday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="mondayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="mondayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Tuesday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="tuesday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="tuesdayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="tuesdayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Repeat for other days of the week -->
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Wednesday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="wednesday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="wednesdayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="wednesdayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Thursday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="thursday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="thursdayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="thursdayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Friday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="friday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="fridayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="fridayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Saturday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="saturday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="saturdayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="saturdayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-4 gap-4 items-center">
+                                    <div>Sunday</div>
+                                    <div>
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" name="workingDays[]" value="sunday" class="text-primary rounded focus:ring-primary">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <select name="sundayStart" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="06:00">6:00 AM</option>
+                                            <option value="07:00">7:00 AM</option>
+                                            <option value="08:00">8:00 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select name="sundayEnd" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <option value="">Select time</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="19:00">7:00 PM</option>
+                                            <option value="20:00">8:00 PM</option>
+                                            <option value="21:00">9:00 PM</option>
+                                            <option value="22:00">10:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Banking Details Section -->
+                    <section id="banking" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Banking Details</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="accountHolderName" class="block text-sm font-medium text-gray-700 mb-1">Account Holder Name*</label>
+                                <input type="text" id="accountHolderName" name="accountHolderName" placeholder="Name as per bank records" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label for="accountNumber" class="block text-sm font-medium text-gray-700 mb-1">Account Number*</label>
+                                <input type="text" id="accountNumber" name="accountNumber" placeholder="Enter bank account number" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label for="ifscCode" class="block text-sm font-medium text-gray-700 mb-1">IFSC Code*</label>
+                                <input type="text" id="ifscCode" name="ifscCode" placeholder="Enter IFSC code" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label for="bankName" class="block text-sm font-medium text-gray-700 mb-1">Bank Name*</label>
+                                <input type="text" id="bankName" name="bankName" placeholder="Enter bank name" class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-lightBlue rounded-md">
+                            <p class="text-sm text-gray-700">
+                                <i class="fas fa-info-circle mr-2 text-primary"></i>
+                                Payouts are processed every Monday for the previous week's completed bookings. Funds typically reflect in your account within 2-3 business days.
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <!-- Logo & Photos Section -->
+                    <section id="media" class="mb-10">
+                        <h2 class="text-xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Logo & Photos</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Business Logo*</label>
+                                <div class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-md">
+                                    <div class="mb-3 text-center">
+                                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-2">Drag and drop your logo here, or</p>
+                                    <div class="file-upload-container">
+                                        <button type="button" class="px-4 py-2 bg-primary text-white rounded-md text-sm hover:bg-primary/90">
+                                            Browse Files
+                                        </button>
+                                        <input type="file" id="logoFile" name="logoFile" accept=".jpg,.jpeg,.png" required>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">Recommended size: 500x500px (Max: 2MB)</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Business Photos (Up to 5)</label>
+                                <div class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-md">
+                                    <div class="mb-3 text-center">
+                                        <i class="fas fa-images text-4xl text-gray-400"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-2">Drag and drop your photos here, or</p>
+                                    <div class="file-upload-container">
+                                        <button type="button" class="px-4 py-2 bg-primary text-white rounded-md text-sm hover:bg-primary/90">
+                                            Browse Files
+                                        </button>
+                                        <input type="file" id="businessPhotos" name="businessPhotos[]" accept=".jpg,.jpeg,.png" multiple>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">Show your work, team, or facilities (Max: 5MB each)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-lightBlue rounded-md">
+                            <p class="text-sm text-gray-700">
+                                <i class="fas fa-info-circle mr-2 text-primary"></i>
+                                High-quality photos help build trust with potential customers. Upload clear, well-lit images that showcase your services.
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-md font-medium hover:bg-gray-300">
+                            Save as Draft
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-primary text-white rounded-md font-medium hover:bg-primary/90">
+                            Submit for Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-primary text-white pt-12 pb-6 mt-12">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <!-- Column 1 -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Urban%20Help%20Logo%20Blue%20Icon%20Trans-ODySZreeZfNDgrkivNaR3JB30aBBqj.png" alt="Urban Help Logo" class="h-10 bg-white p-1 rounded-md mr-2">
+                    <span class="text-white font-bold text-xl">Urban Help</span>
+                </div>
+                <p class="mb-4">We work with experienced and professional cleaners to deliver outstanding service.</p>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>Mon - Sun: 8am - 8pm</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 2 -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Partner Support</h3>
+                <p class="mb-4">Need help with your account or have questions?</p>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span>+91 7672 000 933</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>partners@urbanhelp.co.in</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 3 -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                <div class="space-y-2">
+                    <div>
+                        <a href="#" class="text-white hover:underline">Partner Guidelines</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">FAQs</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">Terms of Service</a>
+                    </div>
+                    <div>
+                        <a href="#" class="text-white hover:underline">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-600 pt-6 text-center">
+            <p>2025 © All rights reserved by Urban Help</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript for functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            // Toggle menu icon
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close menu when clicking the close button
+        closeMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
+        
+        // Close menu when clicking outside
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        });
+
+        // User Menu Toggle
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (userMenuBtn && userMenu) {
+            userMenuBtn.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close user menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // File Upload Handling
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        
+        fileInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const fileNameElement = document.getElementById(this.id + 'Name');
+                if (fileNameElement) {
+                    if (this.files.length > 0) {
+                        fileNameElement.textContent = this.files[0].name;
+                    } else {
+                        fileNameElement.textContent = 'Choose file...';
+                    }
+                }
+            });
+        });
+
+        // Add More Add-On Service
+        const addMoreAddOnBtn = document.getElementById('addMoreAddOn');
+        const addOnServicesContainer = document.getElementById('addOnServices');
+        let addOnCount = 1;
+        
+        addMoreAddOnBtn.addEventListener('click', function() {
+            addOnCount++;
+            
+            const newAddOn = document.createElement('div');
+            newAddOn.className = 'grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md';
+            newAddOn.innerHTML = `
+                <div>
+                    <label for="addOnName${addOnCount}" class="block text-xs font-medium text-gray-700 mb-1">Service Name</label>
+                    <input type="text" id="addOnName${addOnCount}" name="addOnName[]" placeholder="e.g., Deep Cleaning" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <div>
+                    <label for="addOnDescription${addOnCount}" class="block text-xs font-medium text-gray-700 mb-1">Description</label>
+                    <input type="text" id="addOnDescription${addOnCount}" name="addOnDescription[]" placeholder="Brief description" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <div>
+                    <label for="addOnPrice${addOnCount}" class="block text-xs font-medium text-gray-700 mb-1">Price (₹)</label>
+                    <input type="number" id="addOnPrice${addOnCount}" name="addOnPrice[]" placeholder="Additional price" class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+            `;
+            
+            addOnServicesContainer.appendChild(newAddOn);
+        });
+
+        // Form Submission
+        const partnerProfileForm = document.getElementById('partnerProfileForm');
+        
+        partnerProfileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to your server
+            // For now, we'll just show an alert
+            alert('Profile information submitted successfully! Our team will review your details and get back to you shortly.');
+            
+            // Optionally redirect to another page
+            // window.location.href = 'dashboard-approved.html';
+        });
+    });
+</script>
+</body>
+</html>
+
